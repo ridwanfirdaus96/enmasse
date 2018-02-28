@@ -76,13 +76,14 @@ public abstract class TestBaseWithShared extends TestBase {
 
         this.username = "test";
         this.password = "test";
-        getKeycloakClient().createUser(sharedAddressSpace.getName(), username, password, 1, TimeUnit.MINUTES);
+        getKeycloakClient().createUser(sharedAddressSpace.getName(), username, password, 1, TimeUnit.MINUTES,
+                "send_*", "recv_*", "view_*", "admin", "manage", "send_#", "recv_#");
 
         this.managementCredentials = new KeycloakCredentials("artemis-admin", "artemis-admin");
         getKeycloakClient().createUser(sharedAddressSpace.getName(),
                 managementCredentials.getUsername(),
                 managementCredentials.getPassword(),
-                "admin", "send_#", "recv_#", "view_#", "manage_#");
+                "admin", "send_*", "recv_*", "send_#", "recv_#", "view_#", "manage_#");
 
         amqpClientFactory = new AmqpClientFactory(kubernetes, environment, sharedAddressSpace, username, password);
         mqttClientFactory = new MqttClientFactory(kubernetes, environment, sharedAddressSpace, username, password);
