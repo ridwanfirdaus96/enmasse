@@ -15,6 +15,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 import org.slf4j.Logger;
 
 import java.util.*;
@@ -23,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
 
-@Category(IsolatedAddressSpace.class)
+@Tag("isolated")
 public class PlansTest extends TestBase {
 
     private static Logger log = CustomLogger.getLogger();
