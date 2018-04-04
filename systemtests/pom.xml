@@ -149,7 +149,6 @@
             <id>systemtests</id>
             <properties>
                 <skip.tests>false</skip.tests>
-                <tests>mytest</tests>
             </properties>
         </profile>
         <profile>
