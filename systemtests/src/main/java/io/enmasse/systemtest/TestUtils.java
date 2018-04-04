@@ -851,4 +851,11 @@ public class TestUtils {
         }
         return service;
     }
+
+    public static void deleteAddressSpace(AddressApiClient addressApiClient, AddressSpace addressSpace, GlobalLogCollector logCollector) throws Exception {
+        logCollector.collectEvents(addressSpace.getNamespace());
+        logCollector.collectLogsTerminatedPods(addressSpace.getNamespace());
+        logCollector.collectConfigMaps(addressSpace.getNamespace());
+        addressApiClient.deleteAddressSpace(addressSpace);
+    }
 }
