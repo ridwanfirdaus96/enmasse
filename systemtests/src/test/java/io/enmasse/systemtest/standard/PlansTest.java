@@ -14,6 +14,7 @@ import io.enmasse.systemtest.resources.AddressResource;
 import io.enmasse.systemtest.resources.AddressSpacePlan;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class PlansTest extends StandardTestBase {
         plansProvider.tearDown();
     }
 
-    //@Test //test disabled because feature for appending address-plan is not implemented yet, issue: #904
+    @Disabled("test disabled because feature for appending address-plan is not implemented yet, issue: #904")
     public void testAppendAddressPlan() throws Exception {
         List<AddressResource> addressResources = Arrays.asList(new AddressResource("broker", 0.1));
         String weakQueuePlanName = "pooled-standard-queue-weak";

@@ -79,7 +79,7 @@ public class TopicTest extends StandardTestBase {
         Destination t1 = Destination.topic("topicRest1", getDefaultPlan(AddressType.TOPIC));
         Destination t2 = Destination.topic("topicRest2", getDefaultPlan(AddressType.TOPIC));
 
-        runRestApiTest(t1, t2);
+        runRestApiTest(sharedAddressSpace, t1, t2);
     }
 
     @Test

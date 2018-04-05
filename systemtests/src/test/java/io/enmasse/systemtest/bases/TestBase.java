@@ -8,6 +8,7 @@ package io.enmasse.systemtest.bases;
 import com.google.common.collect.Ordering;
 import com.sun.jndi.toolkit.url.Uri;
 import io.enmasse.systemtest.*;
+import io.enmasse.systemtest.ability.ITestSeparator;
 import io.enmasse.systemtest.amqp.AmqpClient;
 import io.enmasse.systemtest.amqp.AmqpClientFactory;
 import io.enmasse.systemtest.clients.AbstractClient;
@@ -45,8 +46,8 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
-import io.enmasse.systemtest.ability.*;
-
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -932,5 +933,44 @@ public abstract class TestBase implements ITestSeparator {
 
     protected void assertWaitForValue(int expected, Callable<Integer> fn) throws Exception {
         assertWaitForValue(expected, fn, new TimeoutBudget(2, TimeUnit.SECONDS));
+    }
+
+    /**
+     * body for rest api tests
+     */
+    public void runRestApiTest(AddressSpace addressSpace, Destination d1, Destination d2) throws Exception {
+        List<String> destinationsNames = Arrays.asList(d1.getAddress(), d2.getAddress());
+        setAddresses(addressSpace, d1);
+        appendAddresses(addressSpace, d2);
+
+        //d1, d2
+        Future<List<String>> response = getAddresses(addressSpace, Optional.empty());
+        assertThat("Rest api does not return all addresses", response.get(1, TimeUnit.MINUTES), is(destinationsNames));
+        log.info("addresses {} successfully created", Arrays.toString(destinationsNames.toArray()));
+
+        //get specific address d2
+        response = getAddresses(addressSpace, Optional.ofNullable(TestUtils.sanitizeAddress(d2.getName())));
+        assertThat("Rest api does not return specific address", response.get(1, TimeUnit.MINUTES), is(destinationsNames.subList(1, 2)));
+
+        deleteAddresses(addressSpace, d1);
+
+        //d2
+        response = getAddresses(addressSpace, Optional.ofNullable(TestUtils.sanitizeAddress(d2.getName())));
+        assertThat("Rest api does not return right addresses", response.get(1, TimeUnit.MINUTES), is(destinationsNames.subList(1, 2)));
+        log.info("address {} successfully deleted", d1.getAddress());
+
+        deleteAddresses(addressSpace, d2);
+
+        //empty
+        response = getAddresses(addressSpace, Optional.empty());
+        assertThat("Rest api returns addresses", response.get(1, TimeUnit.MINUTES), is(Collections.emptyList()));
+        log.info("addresses {} successfully deleted", d2.getAddress());
+
+        setAddresses(addressSpace, d1, d2);
+        deleteAddresses(addressSpace, d1, d2);
+
+        response = getAddresses(addressSpace, Optional.empty());
+        assertThat("Rest api returns addresses", response.get(1, TimeUnit.MINUTES), is(Collections.emptyList()));
+        log.info("addresses {} successfully deleted", Arrays.toString(destinationsNames.toArray()));
     }
 }

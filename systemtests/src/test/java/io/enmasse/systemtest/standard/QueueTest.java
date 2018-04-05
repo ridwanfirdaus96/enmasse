@@ -13,6 +13,7 @@ import io.enmasse.systemtest.amqp.AmqpClient;
 import io.enmasse.systemtest.bases.StandardTestBase;
 import org.apache.qpid.proton.amqp.messaging.AmqpValue;
 import org.apache.qpid.proton.message.Message;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -93,7 +94,7 @@ public class QueueTest extends StandardTestBase {
         Destination q1 = Destination.queue("queue1", getDefaultPlan(AddressType.QUEUE));
         Destination q2 = Destination.queue("queue2", getDefaultPlan(AddressType.QUEUE));
 
-        runRestApiTest(q1, q2);
+        runRestApiTest(sharedAddressSpace, q1, q2);
     }
 
     @Test
@@ -158,7 +159,7 @@ public class QueueTest extends StandardTestBase {
         }
     }
 
-    //@Test test disabled due to issue: #851
+    @Disabled("disabled due to issue #851")
     public void testScaledown() throws Exception {
         Destination dest = Destination.queue("scalequeue", "sharded-queue");
         setAddresses(dest);
