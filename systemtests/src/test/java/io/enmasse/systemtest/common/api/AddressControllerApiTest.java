@@ -119,7 +119,7 @@ public class AddressControllerApiTest extends TestBase {
                 new AddressSpaceEndpoint(endpointPrefix + "mqtt", "mqtt")));
         createAddressSpace(addressSpace);
 
-        KeycloakCredentials luckyUser = new KeycloakCredentials("hovnovolenasersi", "luckyPswd");
+        KeycloakCredentials luckyUser = new KeycloakCredentials("Lucky", "luckyPswd");
         getKeycloakClient().createUser(addressSpace.getName(), luckyUser.getUsername(), luckyUser.getPassword());
 
         //try to get all external endpoints
