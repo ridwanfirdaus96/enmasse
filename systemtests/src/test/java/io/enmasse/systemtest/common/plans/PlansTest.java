@@ -46,7 +46,7 @@ public class PlansTest extends TestBase {
     @Test
     public void testCreateAddressSpacePlan() throws Exception {
         //define and create address plans
-        List<AddressResource> addressResourcesQueue = Arrays.asList(new AddressResource("broker", 1.0));
+        List<AddressResource> addressResourcesQueue = Collections.singletonList(new AddressResource("broker", 1.0));
         List<AddressResource> addressResourcesTopic = Arrays.asList(
                 new AddressResource("broker", 1.0),
                 new AddressResource("router", 1.0));
@@ -257,7 +257,7 @@ public class PlansTest extends TestBase {
         ResourceDefinition limitedResource = new ResourceDefinition(
                 "broker",
                 "queue-persisted",
-                Arrays.asList(
+                Collections.singletonList(
                         new ResourceParameter("GLOBAL_MAX_SIZE", "1Mb")
                 ));
         plansProvider.replaceResourceDefinitionConfig(limitedResource);

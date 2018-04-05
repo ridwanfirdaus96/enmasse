@@ -114,7 +114,7 @@ public abstract class TestBaseWithShared extends TestBase {
      * get all addresses except 'dummy-address'
      */
     protected Future<List<String>> getAddresses(Optional<String> addressName) throws Exception {
-        return TestUtils.getAddresses(addressApiClient, sharedAddressSpace, addressName, Arrays.asList(dummyAddress.getAddress()));
+        return TestUtils.getAddresses(addressApiClient, sharedAddressSpace, addressName, Collections.singletonList(dummyAddress.getAddress()));
     }
 
     /**
@@ -131,11 +131,11 @@ public abstract class TestBaseWithShared extends TestBase {
     }
 
     protected Future<List<Address>> getAddressesObjects(Optional<String> addressName) throws Exception {
-        return TestUtils.getAddressesObjects(addressApiClient, sharedAddressSpace, addressName, Arrays.asList(dummyAddress.getAddress()));
+        return TestUtils.getAddressesObjects(addressApiClient, sharedAddressSpace, addressName, Collections.singletonList(dummyAddress.getAddress()));
     }
 
     protected Future<List<Destination>> getDestinationsObjects(Optional<String> addressName) throws Exception {
-        return TestUtils.getDestinationsObjects(addressApiClient, sharedAddressSpace, addressName, Arrays.asList(dummyAddress.getAddress()));
+        return TestUtils.getDestinationsObjects(addressApiClient, sharedAddressSpace, addressName, Collections.singletonList(dummyAddress.getAddress()));
     }
 
     /**

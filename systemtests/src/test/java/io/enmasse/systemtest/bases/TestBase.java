@@ -396,7 +396,7 @@ public abstract class TestBase implements ITestSeparator {
         options.setPassword(password.toCharArray());
 
         Future<List<MqttMessage>> received = client.recvMessages("t1", 1);
-        Future<Integer> sent = client.sendMessages("t1", Arrays.asList("msgt1"));
+        Future<Integer> sent = client.sendMessages("t1", Collections.singletonList("msgt1"));
 
         return (sent.get(1, TimeUnit.MINUTES) == received.get(1, TimeUnit.MINUTES).size());
     }
@@ -405,7 +405,7 @@ public abstract class TestBase implements ITestSeparator {
         AmqpClient client = amqpClientFactory.createQueueClient(addressSpace);
         client.getConnectOptions().setUsername(username).setPassword(password);
 
-        Future<Integer> sent = client.sendMessages(queueAddress, Arrays.asList("msg1"), 10, TimeUnit.SECONDS);
+        Future<Integer> sent = client.sendMessages(queueAddress, Collections.singletonList("msg1"), 10, TimeUnit.SECONDS);
         Future<List<Message>> received = client.recvMessages(queueAddress, 1, 10, TimeUnit.SECONDS);
 
         return (sent.get(10, TimeUnit.SECONDS) == received.get(10, TimeUnit.SECONDS).size());
@@ -416,7 +416,7 @@ public abstract class TestBase implements ITestSeparator {
         client.getConnectOptions().setUsername(username).setPassword(password);
 
         Future<List<Message>> received = client.recvMessages(anycastAddress, 1, 10, TimeUnit.SECONDS);
-        Future<Integer> sent = client.sendMessages(anycastAddress, Arrays.asList("msg1"), 10, TimeUnit.SECONDS);
+        Future<Integer> sent = client.sendMessages(anycastAddress, Collections.singletonList("msg1"), 10, TimeUnit.SECONDS);
 
         return (sent.get(10, TimeUnit.SECONDS) == received.get(10, TimeUnit.SECONDS).size());
     }
@@ -426,7 +426,7 @@ public abstract class TestBase implements ITestSeparator {
         client.getConnectOptions().setUsername(username).setPassword(password);
 
         Future<List<Message>> received = client.recvMessages(multicastAddress, 1, 10, TimeUnit.SECONDS);
-        Future<Integer> sent = client.sendMessages(multicastAddress, Arrays.asList("msg1"), 10, TimeUnit.SECONDS);
+        Future<Integer> sent = client.sendMessages(multicastAddress, Collections.singletonList("msg1"), 10, TimeUnit.SECONDS);
 
         return (sent.get(10, TimeUnit.SECONDS) == received.get(10, TimeUnit.SECONDS).size());
     }
@@ -436,7 +436,7 @@ public abstract class TestBase implements ITestSeparator {
         client.getConnectOptions().setUsername(username).setPassword(password);
 
         Future<List<Message>> received = client.recvMessages(topicAddress, 1, 10, TimeUnit.SECONDS);
-        Future<Integer> sent = client.sendMessages(topicAddress, Arrays.asList("msg1"), 10, TimeUnit.SECONDS);
+        Future<Integer> sent = client.sendMessages(topicAddress, Collections.singletonList("msg1"), 10, TimeUnit.SECONDS);
 
         return (sent.get(10, TimeUnit.SECONDS) == received.get(10, TimeUnit.SECONDS).size());
     }

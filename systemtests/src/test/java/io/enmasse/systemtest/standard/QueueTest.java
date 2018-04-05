@@ -144,7 +144,7 @@ public class QueueTest extends StandardTestBase {
         }
 
         Future<Integer> sent = client.sendMessages(dest.getAddress(),
-                listOfMessages.toArray(new Message[listOfMessages.size()]));
+                listOfMessages.toArray(new Message[0]));
         assertThat("Wrong count of messages sent", sent.get(1, TimeUnit.MINUTES), is(msgsCount));
 
         Future<List<Message>> received = client.recvMessages(dest.getAddress(), msgsCount);
