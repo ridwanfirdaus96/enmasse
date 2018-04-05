@@ -33,7 +33,6 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Tag("isolated")
-@ExtendWith(ExtensionContextParameterResolver.class)
 public abstract class WebConsolePlansTest extends TestBase implements ISeleniumProvider {
 
     private static Logger log = CustomLogger.getLogger();
