@@ -159,6 +159,7 @@ public class QueueTest extends StandardTestBase {
         }
     }
 
+    @Test
     @Disabled("disabled due to issue #851")
     public void testScaledown() throws Exception {
         Destination dest = Destination.queue("scalequeue", "sharded-queue");
@@ -196,7 +197,8 @@ public class QueueTest extends StandardTestBase {
                 received.get(1, TimeUnit.MINUTES).size(), is(3500));
     }
 
-    //    @Test // disabled due to issue: #903
+    @Test
+    @Disabled("disabled due to issue #903")
     public void testScalePooledQueueAutomatically() throws Exception {
         ArrayList<Destination> dest = new ArrayList<>();
         int destCount = 2000;
